@@ -15,8 +15,8 @@ const Contenedor = styled.div`
     column-gap: 2rem;
   }
 `;
-
 const Imagen = styled.img`
+
   max-width: 100%;
   margin-top: 5rem;
 `;
@@ -37,39 +37,29 @@ const Heading = styled.h1`
     display:block;
   }
 `;
-
 function App() {
-
   const [moneda, guardarMoneda] = useState('');
   const [criptomoneda, guardarCriptomoneda] = useState('');
   const [resultado, guardarResultado] = useState({});
   const [cargando, guardarCargando] = useState(false);
 
   useEffect( () => {
-
       const cotizarCriptomoneda = async () => {
           // evitamos la ejecución la primera vez
           if(moneda === '') return;
-
-          // consultar la api para obtener la cotizacion
+         // consultar la api para obtener la cotizacion
           const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
 
           const resultado = await axios.get(url);
-
           // mostrar el spinner
           guardarCargando(true);
-
           // ocultar el spinner y mostrar el resultado
           setTimeout(() => {
-
-            // cambiar el estado de cargando
+         // cambiar el estado de cargando
             guardarCargando(false);
-
-            // guardar cotizacion
+           // guardar cotizacion
             guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda] );
           }, 3000);
-
-          
       }
       cotizarCriptomoneda();
   }, [moneda, criptomoneda]);
@@ -80,24 +70,14 @@ function App() {
   return (
     <Contenedor>
         <div>
-          <Imagen 
-            src={imagen}
-            alt="imagen cripto"
-          />
+          <Imagen src={imagen} alt="imagen cripto"/>
         </div>
         <div>
             <Heading>Cotiza Criptomonedas al Instante</Heading>
-
-            <Formulario 
-              guardarMoneda={guardarMoneda}
-              guardarCriptomoneda={guardarCriptomoneda}
-            />
-
+            <Formulario guardarMoneda={guardarMoneda} guardarCriptomoneda={guardarCriptomoneda} />
             {componente}
-            
-        </div>
+          </div>
     </Contenedor>
   );
 }
-
 export default App;
